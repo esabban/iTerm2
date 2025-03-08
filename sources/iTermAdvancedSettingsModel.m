@@ -311,6 +311,7 @@ DEFINE_FLOAT(darkModeInactiveTabDarkness, 0.5, SECTION_TABS @"Darkness (in [0…
 DEFINE_BOOL(saveProfilesToRecentDocuments, NO, SECTION_TABS @"Add items to Recents (in the dock icon's menu) to reopen recently used profiles as tabs?")
 DEFINE_BOOL(placeTabsInTitlebarAccessoryInFullScreen, YES, SECTION_TABS @"Place the tabbar in the window's titlebar in full screen mode (macOS 13+ only)?\nThis can be disabled to work around a bug in macOS where tabs may not be visible in full screen.");
 DEFINE_BOOL(defaultIconsUsingLetters, YES, SECTION_TABS @"Use the running command's first letter as the tab's default icon if there isn't a built in one.\nThis takes effect when tabs are configured to use built-in icons.");
+DEFINE_BOOL(tabCloseButtonsAlwaysVisible, NO, SECTION_TABS @"Should tab close buttons always remain visible?");
 
 #pragma mark Mouse
 
@@ -565,6 +566,9 @@ DEFINE_BOOL(logDrawingPerformance, NO, SECTION_DEBUGGING @"Log stats about text 
 DEFINE_BOOL(logRestorableStateSize, NO, SECTION_DEBUGGING @"Log restorable state size info to /tmp/statesize.*.txt.");
 DEFINE_BOOL(showBlockBoundaries, NO, SECTION_DEBUGGING @"Show line buffer block boundaries (issue 6207)");
 DEFINE_BOOL(logToSyslog, NO, SECTION_DEBUGGING @"Debug logs also write to the system log.");
+#if DEBUG
+DEFINE_STRING(alternateSSHIntegrationScript, @"", SECTION_DEBUGGING @"Alternate SSH integration python script");
+#endif
 
 #pragma mark - Session
 

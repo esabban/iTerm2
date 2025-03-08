@@ -203,10 +203,20 @@ NSString *const kPreferenceKeyAITokenLimit = @"AiMaxTokens";
 NSString *const kPreferenceKeyAITermURL = @"AitermURL";
 NSString *const kPreferenceKeyAITermUseLegacyAPI = @"AitermUseLegacyAPI";
 NSString *const kPreferenceKeyIndicateNonDefaultValues  = @"NoSyncHideDefaultValuedSettings";
+NSString *const kPreferenceKeyAICompletion = @"AICompletion";
 
-NSString *const iTermDefaultAIPrompt = @"Return commands suitable for copy/pasting into \\(shell) on \\(uname). Do NOT include commentary NOR Markdown triple-backtick code blocks as your whole response will be copied into my terminal automatically.\n"
+NSString *const kPreferenceKeyAIPermissionCheckTerminalState = @"AIPermissionCheckTerminalState";
+NSString *const kPreferenceKeyAIPermissionRunCommands = @"AIPermissionRunCommands";
+NSString *const kPreferenceKeyAIPermissionViewHistory = @"AIPermissionViewHistory";
+NSString *const kPreferenceKeyAIPermissionWriteToClipboard = @"AIPermissionWriteToClipboard";
+NSString *const kPreferenceKeyAIPermissionTypeForYou = @"AIPermissionTypeForYou";
+NSString *const kPreferenceKeyAIPermissionViewManpages = @"AIPermissionViewManpages";
+NSString *const kPreferenceKeyAIPermissionWriteToFilesystem = @"AIPermissionWriteToFilesystem";
+
+NSString *const iTermDefaultAIPrompt = @"Return a command suitable for copy/pasting into \\(shell) on \\(uname). Do NOT include commentary NOR Markdown triple-backtick code blocks as your whole response will be copied into my terminal automatically.\n"
 @"\n"
-@"The script should do this: \\(ai.prompt)";
+@"It must do this: \\(ai.prompt)";
+
 
 // NOTE: If you update this list, also update preferences.py.
 
@@ -452,10 +462,19 @@ static NSString *sPreviousVersion;
                   kPreferenceKeyAIPrompt: iTermDefaultAIPrompt,
                   kPreferenceKeyAlertOnMarksInOffscreenSessions: @NO,
                   kPreferenceKeyAIModel: @"gpt-4o-mini",
-                  kPreferenceKeyAITokenLimit: @4000,
+                  kPreferenceKeyAITokenLimit: @128000,
                   kPreferenceKeyAITermURL: @"https://api.openai.com/v1/completions",
                   kPreferenceKeyAITermUseLegacyAPI: @NO,
                   kPreferenceKeyIndicateNonDefaultValues: @NO,
+                  kPreferenceKeyAICompletion: @NO,  // ignored - synthetic value
+
+                  kPreferenceKeyAIPermissionCheckTerminalState: @(iTermAIPermissionAsk),
+                  kPreferenceKeyAIPermissionRunCommands: @(iTermAIPermissionAsk),
+                  kPreferenceKeyAIPermissionViewHistory: @(iTermAIPermissionAsk),
+                  kPreferenceKeyAIPermissionWriteToClipboard: @(iTermAIPermissionAsk),
+                  kPreferenceKeyAIPermissionTypeForYou: @(iTermAIPermissionAsk),
+                  kPreferenceKeyAIPermissionViewManpages: @(iTermAIPermissionAsk),
+                  kPreferenceKeyAIPermissionWriteToFilesystem: @(iTermAIPermissionAsk),
 
                   kPreferenceKeyTabStyle_Deprecated: @(TAB_STYLE_LIGHT),
                   kPreferenceKeyTabStyle: @(TAB_STYLE_LIGHT),

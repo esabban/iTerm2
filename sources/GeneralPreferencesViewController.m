@@ -188,6 +188,23 @@ enum {
 
     IBOutlet NSTextField *_customAIEndpoint;
     IBOutlet NSButton *_useLegacyCompletionsAPI;
+
+    IBOutlet NSTextField *_checkTerminalStateLabel; // Check Terminal State
+    IBOutlet NSPopUpButton *_checkTerminalStateButton;
+    IBOutlet NSTextField *_runCommandsLabel; // Run Commands
+    IBOutlet NSPopUpButton *_runCommandsButton;
+    IBOutlet NSTextField *_viewHistoryLabel; // View History
+    IBOutlet NSPopUpButton *_viewHistoryButton;
+    IBOutlet NSTextField *_writeToClipboardLabel; // Write to the Clipboard
+    IBOutlet NSPopUpButton *_writeToClipboardButton;
+    IBOutlet NSTextField *_typeForYouLabel; // Type for You
+    IBOutlet NSPopUpButton *_typeForYouButton;
+    IBOutlet NSTextField *_viewManpagesLabel; // View Manpages
+    IBOutlet NSPopUpButton *_viewManpagesButton;
+    IBOutlet NSTextField *_writeToFilesystemLabel; // View Manpages
+    IBOutlet NSPopUpButton *_writeToFilesystemButton;
+
+    IBOutlet NSButton *_aiCompletions;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -701,6 +718,42 @@ enum {
         return NO;
     };
 
+    info = [self defineControl:_checkTerminalStateButton
+                           key:kPreferenceKeyAIPermissionCheckTerminalState
+                   relatedView:_checkTerminalStateLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+    info = [self defineControl:_runCommandsButton
+                           key:kPreferenceKeyAIPermissionRunCommands
+                   relatedView:_runCommandsLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+    info = [self defineControl:_viewHistoryButton
+                           key:kPreferenceKeyAIPermissionViewHistory
+                   relatedView:_viewHistoryLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+    info = [self defineControl:_writeToClipboardButton
+                           key:kPreferenceKeyAIPermissionWriteToClipboard
+                   relatedView:_writeToClipboardLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+    info = [self defineControl:_typeForYouButton
+                           key:kPreferenceKeyAIPermissionTypeForYou
+                   relatedView:_typeForYouLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+    info = [self defineControl:_viewManpagesButton
+                           key:kPreferenceKeyAIPermissionViewManpages
+                   relatedView:_viewManpagesLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+    info = [self defineControl:_writeToFilesystemButton
+                           key:kPreferenceKeyAIPermissionWriteToFilesystem
+                   relatedView:_writeToFilesystemLabel
+                          type:kPreferenceInfoTypeUnsignedIntegerPopup];
+
+
     info = [self defineControl:_aiModel
                            key:kPreferenceKeyAIModel
                    relatedView:_aiModelLabel
@@ -734,6 +787,23 @@ enum {
     info.shouldBeEnabled = ^BOOL{
         return ![weakSelf valueOfKeyEqualsDefaultValue:kPreferenceKeyAITermURL] && [[weakSelf stringForKey:kPreferenceKeyAITermURL] length] > 0;
     };
+
+    info = [self defineControl:_aiCompletions
+                           key:kPreferenceKeyAICompletion
+                   relatedView:nil
+                          type:kPreferenceInfoTypeCheckbox];
+    info.syntheticGetter = ^id {
+        return @(iTermSecureUserDefaults.instance.aiCompletionsEnabled);
+    };
+    info.syntheticSetter = ^(id newValue) {
+        const BOOL setting = [newValue boolValue];
+        if (setting == iTermSecureUserDefaults.instance.defaultValue_aiCompletionsEnabled) {
+            [iTermSecureUserDefaults.instance resetAICompletionsEnabled];
+        } else {
+            iTermSecureUserDefaults.instance.aiCompletionsEnabled = [newValue boolValue];
+        }
+    };
+
     [self validatePlugin];
     [self updateEnabledState];
     [self commitControls];

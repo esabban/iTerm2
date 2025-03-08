@@ -323,7 +323,8 @@
 // Failed to run the command (e.g., syntax error)
 - (void)screenCommandDidAbortOnLine:(int)line
                         outputRange:(VT100GridCoordRange)outputRange
-                            command:(NSString *_Nonnull)command;
+                            command:(NSString *_Nonnull)command
+                               mark:(id<VT100ScreenMarkReading> _Nonnull)mark;
 
 typedef NS_ENUM(NSUInteger, VT100ScreenWorkingDirectoryPushType) {
     // We polled for the working directory for a really sketchy reason, such as the user pressing enter.
@@ -421,7 +422,7 @@ typedef NS_ENUM(NSUInteger, VT100ScreenWorkingDirectoryPushType) {
                                      pid:(int32_t)pid
                                  channel:(uint8_t)channel
                                    depth:(int)depth;
-
+- (void)screenDidReadRawSSHData:(NSData *)data;
 - (void)screenDidTerminateSSHProcess:(int)pid code:(int)code depth:(int)depth;
 - (void)screenWillBeginSSHIntegration;
 - (void)screenBeginSSHIntegrationWithToken:(NSString * _Nonnull)token
